@@ -1,0 +1,25 @@
+---
+- name: Ansible Lession 19
+  hosts: all
+  any_errors_fatal: true
+  become: yes
+
+  tasks:
+  - name: Task One
+    apt: name=treeeee state=latest
+    ignore_errors: yes
+
+  - name: Copy files1
+    copy:
+     src: /etc/ansible/playbookloop.yml
+     dest: /etc
+
+  - name: Task Two
+    shell: cat /etc/playbookloop.yml
+    register: results
+
+  - debug:
+      var: results
+
+  - name: Task Tree
+    shell: echo Privet Mir!!!

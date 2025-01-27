@@ -1,0 +1,27 @@
+---
+- name: Ansible Crypt playbook
+  hosts: all
+  become: yes
+
+  vars:
+    admin_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          61613866313564646362313765333763363161376430303965323661316234356438633063313262
+          3863393632626466643764663862316435613835636436620a316163393466333337366434646163
+          39313130373565613435306232643336353361626637366233313366343761666566323936303162
+          3335306531396432390a613432653636326561393032613934396663323962666164613266326439
+          3431
+
+  tasks:
+  - name:
+    apt: name=tree state=latest
+
+  -name: Create config file
+   copy:
+     dest: "/home/libreit/myconfig.conf"
+     content: |
+      port = 9092
+      log = 7days
+      home = /opt/kafka/bin
+      user = admin
+      password= {{ admin_password }}

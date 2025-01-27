@@ -1,0 +1,28 @@
+---
+- name: Ansible Crypt Lession
+  hosts: all
+  become: yes
+
+  vars:
+    admin_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63393339636665333234356334343966613534306332396538366461343233656663323439383563
+          6633306638366664616263386536393835303332376534330a666232623762666134373664373030
+          66376563633832303966353537323338623834653238303863363431613836356238613864383236
+          6631623839393762330a633033323035353564333866666133643635356436386132613062343263
+          64376365653361343731376131323733316432623065373961303838343832613664
+  
+
+  tasks:
+  - name: Install package Tree
+    apt: name=tree state=latest
+
+  - name: Create config file
+    copy:
+      dest: "/home/libreit/myconfig.conf"
+      content: |
+        port = 9092
+        log = 7days
+        home = /opt.kafka/bin/
+        user = admin
+        password= {{ admin_password }}
