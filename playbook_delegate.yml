@@ -4,7 +4,7 @@
   become: yes
 
   vars:
-   mytext: "Hello from Roman"
+   mytext: "Hello from Roman!"
 
   tasks:
   - name: Ping test
